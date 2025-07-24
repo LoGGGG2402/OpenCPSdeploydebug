@@ -1,0 +1,27 @@
+#
+# Liferay default account:
+# - username: test@liferay.com
+# - password: test
+#
+# syntax: https://hub.docker.com/u/opencps/ 
+#
+
+version: "2"
+
+services:
+    liferay:
+        image: opencps/liferay-all-in-one-container
+        ports:
+          - "8080:8080"
+          - "3306:3306"
+          - "5005:5005" # Remote debug port
+        environment:
+          - JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+        volumes:
+          - ./mariadb-data/:/var/lib/mysql/
+          - ./mariadb-init-data/:/docker-entrypoint-initdb.d/
+          - ./mariadb-mycnf/my.cnf:/etc/my.cnf
+        networks:
+          - back-tier
+networks:
+    back-tier:
