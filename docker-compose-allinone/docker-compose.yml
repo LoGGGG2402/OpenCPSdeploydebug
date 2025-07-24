@@ -14,9 +14,9 @@ services:
         ports:
           - "8080:8080"
           - "3306:3306"
-          - "5005:5005" # Remote debug port
+          - "5005:5005"
         environment:
-          - JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+          - JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005
         volumes:
           - ./mariadb-data/:/var/lib/mysql/
           - ./mariadb-init-data/:/docker-entrypoint-initdb.d/
